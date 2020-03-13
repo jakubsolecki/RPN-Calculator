@@ -1,5 +1,5 @@
 %%%-------------------------------------------------------------------
-%%% @author Mithrian812
+%%% @author Jakub
 %%% @copyright (C) 2020, <Me>
 %%% @doc
 %%%
@@ -7,7 +7,7 @@
 %%% Created : 12. mar 2020 21:37
 %%%-------------------------------------------------------------------
 -module(rpnCalc).
--author("Mithrian812").
+-author("Jakub").
 
 %% API
 -export([calculateRPN/1]).

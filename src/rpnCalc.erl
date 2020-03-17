@@ -17,20 +17,36 @@ calculateRPN(S) -> calculateRPN(string:tokens(S, " "), []).
 
 calculateRPN([], [Stack]) -> Stack;
 calculateRPN([H | T], Stack) ->
-  case lists:member(H, ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]) of
+  case re:run(H, "^[0-9]*$") /= nomatch of
     true -> calculateRPN(T, [list_to_integer(H) | Stack]);
-    false -> calculateRPN2([H | T], Stack)
+    false -> case re:run(H, "^[0-9]+.[0-9]+$") /= nomatch of
+               true -> calculateRPN(T, [list_to_float(H) | Stack]);
+               false -> calculateRPN2([H | T], Stack)
+             end
   end.
 
 calculateRPN2([H | T], [S1, S2 | Stack]) ->
   if H == "+" ->
     calculateRPN(T, [S1 + S2 | Stack])
   ; H == "-" ->
-    calculateRPN(T, [S1 - S2 | Stack])
+    calculateRPN(T, [S2 - S1 | Stack])
   ; H == "*" ->
     calculateRPN(T, [S1 * S2 | Stack])
   ; H == "/" ->
-    calculateRPN(T, [S1 / S2 | Stack])
+    calculateRPN(T, [S2 / S1 | Stack])
+  ; H == "pow" ->
+    calculateRPN(T, [math:pow(S2, S1) | Stack])
+  end;
+
+calculateRPN2([H | T], [S | Stack]) ->
+  if H == "sqrt" ->
+    calculateRPN(T, [math:sqrt(S) | Stack])
+  ; H == "sin" ->
+    calculateRPN(T, [math:sin(math:pi() * S / 180) | Stack])
+  ; H == "cos" ->
+    calculateRPN(T, [math:cos(math:pi() * S / 180) | Stack])
+  ; H == "tan" ->
+    calculateRPN(T, [math:tan(math:pi() * S / 180) | Stack])
   end.
 
 

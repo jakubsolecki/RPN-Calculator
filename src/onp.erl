@@ -6,14 +6,14 @@
 %%% @end
 %%% Created : 12. mar 2020 21:37
 %%%-------------------------------------------------------------------
--module(rpnCalc).
+-module(onp).
 -author("Jakub").
 
 %% API
--export([calculateRPN/1]).
+-export([onp/1]).
 
 
-calculateRPN(S) -> calculateRPN(string:tokens(S, " "), []).
+onp(S) -> calculateRPN(string:tokens(S, " "), []).
 
 calculateRPN([], [Stack]) -> Stack;
 calculateRPN([H | T], Stack) ->

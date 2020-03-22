@@ -19,7 +19,7 @@ calculateRPN([], [Stack]) -> Stack;
 calculateRPN([H | T], Stack) ->
   case re:run(H, "^[0-9]*$") /= nomatch of
     true -> calculateRPN(T, [list_to_integer(H) | Stack]);
-    false -> case re:run(H, "^[0-9]+.[0-9]+$") /= nomatch of
+    false -> case re:run(H, "^[0-9]+[.][0-9]+$") /= nomatch of
                true -> calculateRPN(T, [list_to_float(H) | Stack]);
                false -> calculateRPN2([H | T], Stack)
              end
